@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Table, FormGroup, Form, Button, Label, Input, FormText } from 'reactstrap';
+import { Table, FormGroup, Form, Button, Label, Input } from 'reactstrap';
+import { ALPHA_API_KEY } from './config_keys.js';
 import axios from 'axios';
 
 class App extends Component {
@@ -10,7 +11,9 @@ class App extends Component {
     gainers: [],
     losers: [],
     search: '',
-    symbolLookup: [],
+    symbolQuote: {},
+    symbolNews: [],
+    input: false,
     apiDataLoaded: false
   }
 
@@ -39,7 +42,7 @@ class App extends Component {
   handleInputChange = (e) => {
     e.preventDefault();
     this.setState({ 
-      search: e.target.value
+      search: e.target.value,
     })
     console.log("searchState: " + this.state.search);
   }
@@ -52,11 +55,15 @@ class App extends Component {
       .then(res => {
         console.log(res);
         this.setState({
-          symbolLookup: res.data.quote.symbol,
-          search: ''
+          symbolQuote: res.data.quote,
+          symbolNews: res.data.news,
+          search: '',
+          input: true
         })
-        console.log(this.state.symbolLookup);
+        console.log(this.state.symbolQuote);
+        console.log(this.state.input);
       })
+    .catch(err => console.log(err));
   }
 
   async componentDidMount() {
@@ -67,8 +74,9 @@ class App extends Component {
   }
 
   render() {
-    let { gainers, losers, apiDataLoaded } = this.state;
+    let { gainers, losers, apiDataLoaded, symbolQuote, symbolNews, input } = this.state;
     let marketList = null;
+    let results = null;
 
     marketList = (lists, color) => {
       return (
@@ -95,8 +103,24 @@ class App extends Component {
           </tbody>
         </Table>
       )
-    }
+    };
 
+    results = () => {
+      if (this.state.input) {
+        return (
+          <div>
+            <h2>{symbolQuote.symbol}</h2>
+            <h4>{symbolQuote.companyName}</h4>
+            <h3>${symbolQuote.close}</h3>  
+            <h5>52 wk high: ${symbolQuote.week52High}</h5>
+            <h5>52 wk low: ${symbolQuote.week52Low}</h5> 
+            <h5>Vol: {symbolQuote.latestVolume}</h5>
+          </div>
+        )
+      } else {
+        return null;
+      }
+    };
  
     if (apiDataLoaded) {
       return (
@@ -114,7 +138,7 @@ class App extends Component {
             </FormGroup>
             <Button onClick={(e) => this.handleSubmit(this.state.search, e)}>Search</Button>
           </Form>
-          {this.state.symbolLookup}
+          {results()}
         </div> 
       )
     } else {
