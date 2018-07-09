@@ -47,13 +47,13 @@ class App extends Component {
     console.log("searchState: " + this.state.search);
   }
 
-  handleSubmit = (symbol, e) => {
-    e.preventDefault();
+  handleSubmit = (e) => {
+    // e.preventDefault();
+    let sym = this.state.search;
     console.log('running handleSubmit function...');
     axios
-      .get(`https://api.iextrading.com/1.0/stock/${symbol}/batch?types=quote,news`)
+      .get(`https://api.iextrading.com/1.0/stock/${sym}/batch?types=quote,news&displayPercent=true`)
       .then(res => {
-        console.log(res);
         this.setState({
           symbolQuote: res.data.quote,
           symbolNews: res.data.news,
@@ -61,9 +61,17 @@ class App extends Component {
           input: true
         })
         console.log(this.state.symbolQuote);
-        console.log(this.state.input);
+        console.log(this.state.symbolNews);
       })
     .catch(err => console.log(err));
+  }
+
+  handleListClick = (e, symbol) => {
+    this.setState({
+      search: symbol
+    });
+    console.log(this.state.search);
+    this.handleSubmit(e);
   }
 
   async componentDidMount() {
@@ -92,7 +100,11 @@ class App extends Component {
           </thead>
           <tbody>
             {lists.map((list, idx) => (
-              <tr key={idx}>
+              <tr 
+                key={idx} 
+                onClick={() => this.setState({ search: list.symbol }, (e) => this.handleListClick(e, list.symbol))}
+                style={{ 'cursor': 'pointer' }}
+              >
                 <td className="list-item" style={{ 'color': color }}>{list.symbol}</td>
                 <td className="list-item">${list.close.toFixed(2)}</td>
                 <td className="list-item">$ {list.change.toFixed(2)}</td>
@@ -111,10 +123,13 @@ class App extends Component {
           <div>
             <h2>{symbolQuote.symbol}</h2>
             <h4>{symbolQuote.companyName}</h4>
-            <h3>${symbolQuote.close}</h3>  
-            <h5>52 wk high: ${symbolQuote.week52High}</h5>
-            <h5>52 wk low: ${symbolQuote.week52Low}</h5> 
-            <h5>Vol: {symbolQuote.latestVolume}</h5>
+            <h6>{symbolQuote.sector}</h6>
+            <h3>${symbolQuote.close.toFixed(2)}</h3>  
+            <p>{symbolQuote.change.toFixed(2)}</p>
+            <p>{symbolQuote.changePercent.toFixed(2)}%</p>
+            <h5>52 wk high: ${symbolQuote.week52High.toFixed(2)}</h5>
+            <h5>52 wk low: ${symbolQuote.week52Low.toFixed(2)}</h5> 
+            <h5>Vol: {symbolQuote.latestVolume.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h5>
           </div>
         )
       } else {
@@ -127,18 +142,18 @@ class App extends Component {
         <div className="App">
           <h1>React</h1>
           <br/>
+          {results()}
           <h3>Top Gainers</h3>
           {marketList(gainers, 'green')}
           <h3>Top Losers</h3>
           {marketList(losers, 'red')}
-          <Form onSubmit={(e) => this.handleSubmit(this.state.search, e)}>
+          <Form onSubmit={(e) => this.handleSubmit(e)}>
             <FormGroup>
               <Label>Search By Symbol</Label>
-              <Input type="text" name="symbol" placeholder="XYZ" onChange={this.handleInputChange} value={this.state.search}/>
+              <Input type="text" name="symbol" placeholder="XYZ" onChange={this.handleInputChange} />
             </FormGroup>
-            <Button onClick={(e) => this.handleSubmit(this.state.search, e)}>Search</Button>
+            <Button onClick={(e) => this.handleSubmit(e)}>Search</Button>
           </Form>
-          {results()}
         </div> 
       )
     } else {
