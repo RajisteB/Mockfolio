@@ -13,6 +13,7 @@ class App extends Component {
     search: '',
     symbolQuote: {},
     symbolNews: [],
+    error: false,
     input: false,
     apiDataLoaded: false
   }
@@ -47,31 +48,49 @@ class App extends Component {
     console.log("searchState: " + this.state.search);
   }
 
-  handleSubmit = (e) => {
-    // e.preventDefault();
-    let sym = this.state.search;
-    console.log('running handleSubmit function...');
+  getSingleStock = (sym) => {
     axios
       .get(`https://api.iextrading.com/1.0/stock/${sym}/batch?types=quote,news&displayPercent=true`)
       .then(res => {
+        console.log(res.status);
         this.setState({
           symbolQuote: res.data.quote,
           symbolNews: res.data.news,
           search: '',
-          input: true
+          input: true,
+          error: false
         })
         console.log(this.state.symbolQuote);
         console.log(this.state.symbolNews);
       })
-    .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        this.setState({ 
+          input: false, 
+          error: true,
+          search: ''
+        });
+      });
   }
 
-  handleListClick = (e, symbol) => {
+  handleSubmit = (e) => {
+    let sym = null;
+    e.preventDefault();
+    console.log('running handleSubmit function...');
+    sym = this.state.search;
+    this.getSingleStock(sym)
+  }
+
+  handleListClick = (sym) => {
+    this.getSingleStock(sym)
+  }
+
+  closeResults = () => {
     this.setState({
-      search: symbol
-    });
-    console.log(this.state.search);
-    this.handleSubmit(e);
+      input: false,
+      error: false,
+      search: ''
+    })
   }
 
   async componentDidMount() {
@@ -82,7 +101,15 @@ class App extends Component {
   }
 
   render() {
-    let { gainers, losers, apiDataLoaded, symbolQuote, symbolNews, input } = this.state;
+    let { 
+      input, 
+      error, 
+      losers, 
+      gainers, 
+      symbolNews, 
+      symbolQuote, 
+      apiDataLoaded 
+    } = this.state;
     let marketList = null;
     let results = null;
 
@@ -102,7 +129,7 @@ class App extends Component {
             {lists.map((list, idx) => (
               <tr 
                 key={idx} 
-                onClick={() => this.setState({ search: list.symbol }, (e) => this.handleListClick(e, list.symbol))}
+                onClick={() => this.setState({ search: list.symbol }, () => this.handleListClick(list.symbol))}
                 style={{ 'cursor': 'pointer' }}
               >
                 <td className="list-item" style={{ 'color': color }}>{list.symbol}</td>
@@ -118,7 +145,7 @@ class App extends Component {
     };
 
     results = () => {
-      if (this.state.input) {
+      if (input) {
         return (
           <div>
             <h2>{symbolQuote.symbol}</h2>
@@ -130,8 +157,16 @@ class App extends Component {
             <h5>52 wk high: ${symbolQuote.week52High.toFixed(2)}</h5>
             <h5>52 wk low: ${symbolQuote.week52Low.toFixed(2)}</h5> 
             <h5>Vol: {symbolQuote.latestVolume.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h5>
+            <button onClick={this.closeResults}>&times;</button>
           </div>
         )
+      } else if (error) {
+        return (
+          <div>
+            Symbol not found...please try again.
+            <button onClick={this.closeResults}>&times;</button>
+          </div>
+        );
       } else {
         return null;
       }
@@ -142,18 +177,18 @@ class App extends Component {
         <div className="App">
           <h1>React</h1>
           <br/>
+          <Form onSubmit={(e) => this.handleSubmit(e)}>
+            <FormGroup>
+              <Label>Search By Symbol</Label>
+              <Input type="text" name="symbol" placeholder="XYZ" onChange={this.handleInputChange} value={this.state.search} />
+            </FormGroup>
+            <Button type="submit">Search</Button>
+          </Form>
           {results()}
           <h3>Top Gainers</h3>
           {marketList(gainers, 'green')}
           <h3>Top Losers</h3>
           {marketList(losers, 'red')}
-          <Form onSubmit={(e) => this.handleSubmit(e)}>
-            <FormGroup>
-              <Label>Search By Symbol</Label>
-              <Input type="text" name="symbol" placeholder="XYZ" onChange={this.handleInputChange} />
-            </FormGroup>
-            <Button onClick={(e) => this.handleSubmit(e)}>Search</Button>
-          </Form>
         </div> 
       )
     } else {
