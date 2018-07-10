@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Table, FormGroup, Form, Button, Label, Input } from 'reactstrap';
-import { ALPHA_API_KEY } from './config_keys.js';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import { Table, FormGroup, Form, Label, Input } from 'reactstrap';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { Theme } from './themes.jsx';
+import { LineChart, Line, XAxis, YAxis, Legend, Treemap, Tooltip } from 'recharts';
+import { API_ROUTE, API_KEY } from './config_keys';
 import axios from 'axios';
+import SearchBar from './components/search/searchbar';
+
 
 class App extends Component {
   state = {
@@ -13,6 +19,8 @@ class App extends Component {
     search: '',
     symbolQuote: {},
     symbolNews: [],
+    chartData: null,
+    sector: [],
     error: false,
     input: false,
     apiDataLoaded: false
@@ -40,49 +48,63 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
-  handleInputChange = (e) => {
-    e.preventDefault();
-    this.setState({ 
-      search: e.target.value,
-    })
-    console.log("searchState: " + this.state.search);
-  }
+  // getChartData = (sym) => {
+  //   axios
+  //     .get(`https://api.iextrading.com/1.0/stock/${sym.toLowerCase()}/chart/1y`)
+  //     .then(res => {
+  //       console.log(res.data);
+  //       this.setState({
+  //         chartData: res.data
+  //       })
+  //       console.log(this.state.chartData);
+  //     })
+  // }
 
-  getSingleStock = (sym) => {
-    axios
-      .get(`https://api.iextrading.com/1.0/stock/${sym}/batch?types=quote,news&displayPercent=true`)
-      .then(res => {
-        console.log(res.status);
-        this.setState({
-          symbolQuote: res.data.quote,
-          symbolNews: res.data.news,
-          search: '',
-          input: true,
-          error: false
-        })
-        console.log(this.state.symbolQuote);
-        console.log(this.state.symbolNews);
-      })
-      .catch(err => {
-        console.log(err);
-        this.setState({ 
-          input: false, 
-          error: true,
-          search: ''
-        });
-      });
-  }
+  // handleInputChange = (e) => {
+  //   e.preventDefault();
+  //   this.setState({ 
+  //     search: e.target.value,
+  //   })
+  //   console.log("searchState: " + this.state.search);
+  // }
 
-  handleSubmit = (e) => {
-    let sym = null;
-    e.preventDefault();
-    console.log('running handleSubmit function...');
-    sym = this.state.search;
-    this.getSingleStock(sym)
-  }
+  // getSingleStock = (sym) => {
+  //   axios
+  //     .get(`https://api.iextrading.com/1.0/stock/${sym}/batch?types=quote,news&displayPercent=true`)
+  //     .then(res => {
+  //       console.log(res.status);
+  //       this.setState({
+  //         symbolQuote: res.data.quote,
+  //         symbolNews: res.data.news,
+  //         search: '',
+  //         input: true,
+  //         error: false
+  //       })
+  //       console.log(this.state.symbolQuote);
+  //       console.log(this.state.symbolNews);
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //       this.setState({ 
+  //         input: false, 
+  //         error: true,
+  //         search: ''
+  //       });
+  //     });
+  // }
+
+  // handleSubmit = (e) => {
+  //   let sym = null;
+  //   e.preventDefault();
+  //   console.log('running handleSubmit function...');
+  //   sym = this.state.search;
+  //   this.getSingleStock(sym);
+  //   this.getChartData(sym);
+  // }
 
   handleListClick = (sym) => {
-    this.getSingleStock(sym)
+    this.getSingleStock(sym);
+    this.getChartData(sym);
   }
 
   closeResults = () => {
@@ -93,12 +115,39 @@ class App extends Component {
     })
   }
 
-  async componentDidMount() {
-    await this.getListData();
-    await this.setState({
-        apiDataLoaded: true
-      });
+  getSectorData = () => {
+    let sectorData = [];
+    axios
+      .get(`${API_ROUTE}${API_KEY}`)
+      .then(res => {
+        console.log(res);
+        let rank = res.data["Rank A: Real-Time Performance"];
+        for (let i in rank) {
+          sectorData.push({ 
+            name: i,
+            children: [{
+              sector: i, 
+              pct: parseFloat(rank[`${i}`].split("").slice(0, rank[`${i}`].length - 1).join(""))
+            }]
+          })
+        }
+        this.setState({
+          sector: sectorData
+        })
+        console.log(this.state.sector);
+      })
+      .catch(err => console.log(err));
   }
+
+  // async componentDidMount() {
+  //   await this.getListData();
+  //   await this.getSectorData();
+  //   await this.getSingleStock('AAPL');
+  //   await this.getChartData('AAPL');
+  //   await this.setState({
+  //       apiDataLoaded: true
+  //     });
+  // }
 
   render() {
     let { 
@@ -115,7 +164,7 @@ class App extends Component {
 
     marketList = (lists, color) => {
       return (
-        <Table size="sm" className="market-list" style={{ 'width': '50%'}}>
+        <Table size="sm" className="market-list table" style={{ 'width': '20%', 'padding': '2px' }}>
           <thead>
             <tr>
               <th>Symbol</th>
@@ -129,7 +178,10 @@ class App extends Component {
             {lists.map((list, idx) => (
               <tr 
                 key={idx} 
-                onClick={() => this.setState({ search: list.symbol }, () => this.handleListClick(list.symbol))}
+                onClick={() => 
+                  this.setState({ search: list.symbol }, 
+                  () => this.handleListClick(list.symbol))
+                }
                 style={{ 'cursor': 'pointer' }}
               >
                 <td className="list-item" style={{ 'color': color }}>{list.symbol}</td>
@@ -144,52 +196,22 @@ class App extends Component {
       )
     };
 
-    results = () => {
-      if (input) {
-        return (
-          <div>
-            <h2>{symbolQuote.symbol}</h2>
-            <h4>{symbolQuote.companyName}</h4>
-            <h6>{symbolQuote.sector}</h6>
-            <h3>${symbolQuote.close.toFixed(2)}</h3>  
-            <p>{symbolQuote.change.toFixed(2)}</p>
-            <p>{symbolQuote.changePercent.toFixed(2)}%</p>
-            <h5>52 wk high: ${symbolQuote.week52High.toFixed(2)}</h5>
-            <h5>52 wk low: ${symbolQuote.week52Low.toFixed(2)}</h5> 
-            <h5>Vol: {symbolQuote.latestVolume.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h5>
-            <button onClick={this.closeResults}>&times;</button>
-          </div>
-        )
-      } else if (error) {
-        return (
-          <div>
-            Symbol not found...please try again.
-            <button onClick={this.closeResults}>&times;</button>
-          </div>
-        );
-      } else {
-        return null;
-      }
-    };
+    
  
-    if (apiDataLoaded) {
+    if (true) {
       return (
-        <div className="App">
-          <h1>React</h1>
-          <br/>
-          <Form onSubmit={(e) => this.handleSubmit(e)}>
-            <FormGroup>
-              <Label>Search By Symbol</Label>
-              <Input type="text" name="symbol" placeholder="XYZ" onChange={this.handleInputChange} value={this.state.search} />
-            </FormGroup>
-            <Button type="submit">Search</Button>
-          </Form>
-          {results()}
-          <h3>Top Gainers</h3>
-          {marketList(gainers, 'green')}
-          <h3>Top Losers</h3>
-          {marketList(losers, 'red')}
-        </div> 
+        <React.Fragment>
+          <CssBaseline />
+          <div className="App">
+          <SearchBar />
+            {/* <h1>Mockfolio</h1>
+            <br/>
+            <h3>Top Gainers</h3>
+            {marketList(gainers, 'green')}
+            <h3>Top Losers</h3>
+            {marketList(losers, 'red')} */}
+          </div> 
+        </React.Fragment>
       )
     } else {
       return (
