@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 // import 'bootstrap/dist/css/bootstrap.min.css';
-import { Table, FormGroup, Form, Label, Input } from 'reactstrap';
-import Button from '@material-ui/core/Button';
+import { Table } from 'reactstrap';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Theme } from './themes.jsx';
-import { LineChart, Line, XAxis, YAxis, Legend, Treemap, Tooltip } from 'recharts';
 import { API_ROUTE, API_KEY } from './config_keys';
 import axios from 'axios';
 import SearchBar from './components/search/searchbar';
@@ -16,13 +13,6 @@ class App extends Component {
     mostActive: [],
     gainers: [],
     losers: [],
-    search: '',
-    symbolQuote: {},
-    symbolNews: [],
-    chartData: null,
-    sector: [],
-    error: false,
-    input: false,
     apiDataLoaded: false
   }
 
@@ -48,72 +38,11 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
-  // getChartData = (sym) => {
-  //   axios
-  //     .get(`https://api.iextrading.com/1.0/stock/${sym.toLowerCase()}/chart/1y`)
-  //     .then(res => {
-  //       console.log(res.data);
-  //       this.setState({
-  //         chartData: res.data
-  //       })
-  //       console.log(this.state.chartData);
-  //     })
-  // }
-
-  // handleInputChange = (e) => {
-  //   e.preventDefault();
-  //   this.setState({ 
-  //     search: e.target.value,
-  //   })
-  //   console.log("searchState: " + this.state.search);
-  // }
-
-  // getSingleStock = (sym) => {
-  //   axios
-  //     .get(`https://api.iextrading.com/1.0/stock/${sym}/batch?types=quote,news&displayPercent=true`)
-  //     .then(res => {
-  //       console.log(res.status);
-  //       this.setState({
-  //         symbolQuote: res.data.quote,
-  //         symbolNews: res.data.news,
-  //         search: '',
-  //         input: true,
-  //         error: false
-  //       })
-  //       console.log(this.state.symbolQuote);
-  //       console.log(this.state.symbolNews);
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //       this.setState({ 
-  //         input: false, 
-  //         error: true,
-  //         search: ''
-  //       });
-  //     });
-  // }
-
-  // handleSubmit = (e) => {
-  //   let sym = null;
-  //   e.preventDefault();
-  //   console.log('running handleSubmit function...');
-  //   sym = this.state.search;
-  //   this.getSingleStock(sym);
-  //   this.getChartData(sym);
-  // }
-
   handleListClick = (sym) => {
     this.getSingleStock(sym);
     this.getChartData(sym);
   }
 
-  closeResults = () => {
-    this.setState({
-      input: false,
-      error: false,
-      search: ''
-    })
-  }
 
   getSectorData = () => {
     let sectorData = [];
@@ -151,16 +80,11 @@ class App extends Component {
 
   render() {
     let { 
-      input, 
-      error, 
       losers, 
-      gainers, 
-      symbolNews, 
-      symbolQuote, 
+      gainers,
       apiDataLoaded 
     } = this.state;
     let marketList = null;
-    let results = null;
 
     marketList = (lists, color) => {
       return (

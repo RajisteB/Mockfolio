@@ -12,5 +12,9 @@ export const Theme = createMuiTheme({
       secondaryText: '#757575',
       dividerColor: '#BDBDBD'
     },
+    market: {
+      open: '#2ecc71',
+      closed: '#e74c3c'
+    }
   },
 });

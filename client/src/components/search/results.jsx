@@ -1,24 +1,80 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import { Theme } from '../../themes.jsx';
 
+const styles = {
+  card : {
+    width: '90%',
+    margin: '0 auto',
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginTop: 2
+  },
+  price: {
+    fontSize: 30,
+  },
+  grid: {
+    marginTop: 10
+  },
+}
+
 const Results = (props) => {
-  let { symbolQuote, input, dataLoaded, error } = props;
+  let { symbolQuote, input, dataLoaded, error, classes } = props;
 
   if (input && dataLoaded ) {
     return (
-      <div>
-        <h1>{symbolQuote.symbol}</h1>
-        <h4>{symbolQuote.companyName}</h4>
-        <h6>{symbolQuote.sector}</h6>
-        <h3>${symbolQuote.close.toFixed(2)}</h3>  
-        <p>{symbolQuote.change.toFixed(2)}</p>
-        <p>{symbolQuote.changePercent.toFixed(2)}%</p>
-        <h5>52 wk high: ${symbolQuote.week52High.toFixed(2)}</h5>
-        <h5>52 wk low: ${symbolQuote.week52Low.toFixed(2)}</h5> 
-        <h5>
-          Vol: {symbolQuote.latestVolume.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-        </h5>
-      </div>
+      <Card className={classes.card}>
+        <CardContent>
+          <Grid 
+            container 
+            spacing={24}
+            direction="row"
+            justify="space-between"
+            alignItems="flex-start"
+            className={classes.grid}
+          >
+            <Grid>
+              <Typography variant="headline" component="h1">
+                {symbolQuote.symbol}
+              </Typography >
+              <Typography className={classes.title} color="textSecondary">
+                {symbolQuote.companyName}
+              </Typography>
+              <Typography color="textSecondary">
+                {symbolQuote.sector}
+              </Typography>
+              <Typography color="textSecondary">
+                {
+                  symbolQuote.primaryExchange.split(' ')[0] === 'New' ?
+                  'NYSE' : symbolQuote.primaryExchange.split(' ')[0]
+                }
+              </Typography>
+            </Grid>
+            <Grid>
+              <Typography>
+                Vol: {symbolQuote.latestVolume.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              </Typography>
+              <Typography>Ytd: {symbolQuote.ytdChange.toFixed(2)}%</Typography>
+              <Typography>52 wk hi: ${symbolQuote.week52High.toFixed(2)}</Typography>
+              <Typography>52 wk lo: ${symbolQuote.week52Low.toFixed(2)}</Typography> 
+            </Grid>
+            <Grid>
+              <Typography>Chg: {symbolQuote.change.toFixed(2)}</Typography>
+              <Typography>Chg%: {symbolQuote.changePercent.toFixed(2)}%</Typography>
+              <Typography className={classes.price}>${symbolQuote.close.toFixed(2)}</Typography>  
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
     )
   } else if ( error ) {
     return (
@@ -31,4 +87,8 @@ const Results = (props) => {
   };
 }
 
-export default Results;
+Results.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Results);
