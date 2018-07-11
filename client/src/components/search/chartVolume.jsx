@@ -58,7 +58,7 @@ const ChartVol = (props) => {
         />
         <Bar 
           dataKey="volume"
-          fill={Theme.palette.primary.dark}
+          fill={Theme.palette.primary.main}
         />
       </BarChart>
     </ResponsiveContainer>

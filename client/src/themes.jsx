@@ -13,8 +13,8 @@ export const Theme = createMuiTheme({
       dividerColor: '#BDBDBD'
     },
     market: {
-      open: '#2ecc71',
-      closed: '#e74c3c'
+      openUp: '#2ecc71',
+      closeDown: '#e74c3c'
     }
   },
 });

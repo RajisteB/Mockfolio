@@ -12,6 +12,7 @@ const styles = {
   card : {
     width: '90%',
     margin: '0 auto',
+    marginBottom: 8,
   },
   title: {
     fontSize: 14,
@@ -23,12 +24,17 @@ const styles = {
     fontSize: 30,
   },
   grid: {
-    marginTop: 10
+    padding: 10
   },
 }
 
 const Results = (props) => {
   let { symbolQuote, input, dataLoaded, error, classes } = props;
+  let colors = null;
+
+  symbolQuote.change < 0 ? 
+  colors = Theme.palette.market.closeDown :
+  colors = Theme.palette.market.openUp;
 
   if (input && dataLoaded ) {
     return (
@@ -39,7 +45,7 @@ const Results = (props) => {
             spacing={24}
             direction="row"
             justify="space-between"
-            alignItems="flex-start"
+            alignItems="center"
             className={classes.grid}
           >
             <Grid>
@@ -68,8 +74,8 @@ const Results = (props) => {
               <Typography>52 wk lo: ${symbolQuote.week52Low.toFixed(2)}</Typography> 
             </Grid>
             <Grid>
-              <Typography>Chg: {symbolQuote.change.toFixed(2)}</Typography>
-              <Typography>Chg%: {symbolQuote.changePercent.toFixed(2)}%</Typography>
+              <Typography style={{ color: `${colors}`}} >Chg: {symbolQuote.change.toFixed(2)}</Typography>
+              <Typography style={{ color: `${colors}`}} >Chg%: {symbolQuote.changePercent.toFixed(2)}%</Typography>
               <Typography className={classes.price}>${symbolQuote.close.toFixed(2)}</Typography>  
             </Grid>
           </Grid>

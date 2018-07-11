@@ -8,6 +8,10 @@ import { Theme } from '../../themes.jsx';
 import axios from 'axios';
 import Results from './results.jsx';
 import ResultsCharts from './resultsCharts.jsx';
+import Grid from '@material-ui/core/Grid';
+import Summary from './summary.jsx';
+
+const BaseURL = 'http://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exlimit=max&explaintext&exintro&origin=*'
 
 const styles = theme => ({
   container: {
@@ -22,6 +26,9 @@ const styles = theme => ({
   button: {
     backgroundColor: Theme.palette.primary.main,
     color: Theme.palette.primary.contrastText,
+  },
+  search: {
+    marginBottom: 10
   }
 });
 
@@ -32,12 +39,35 @@ class SearchBar extends Component {
       search: '',
       symbolQuote: {},
       symbolNews: [],
+      summary: null,
+      logo: null,
       chartData: null,
       error: false,
       input: false,
       apiDataLoaded: false
 
     }
+  }
+
+  getCompanySum = (sym) => {
+    let desc,
+        logo = null;
+    axios
+    .get(`https://api.iextrading.com/1.0/stock/${sym}/company`)
+    .then(res => {
+      desc = res.data.description;
+      axios.get(`https://api.iextrading.com/1.0/stock/${sym}/logo`)
+      .then(res => {
+        logo = res.data.url;
+        this.setState({ 
+          summary: desc,
+          logo: logo
+        });
+        console.log(logo);
+      })
+      .catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
   }
 
   getSingleStock = (sym) => {
@@ -52,6 +82,7 @@ class SearchBar extends Component {
           input: true,
           error: false
         })
+        this.getCompanySum(this.state.symbolQuote.symbol);
         console.log(this.state.symbolQuote);
         console.log(this.state.symbolNews);
       })
@@ -98,14 +129,16 @@ class SearchBar extends Component {
     await this.getSingleStock('AAPL');
     await this.getChartData('AAPL');
     await this.setState({
-        apiDataLoaded: true
-      });
+      apiDataLoaded: true
+    });
   }
 
   render() {
     let { 
+      logo,
       input, 
       error, 
+      summary,
       chartData,
       symbolQuote, 
       apiDataLoaded 
@@ -116,18 +149,25 @@ class SearchBar extends Component {
 
     return (
       <div className="search-bar" style={{ 'fontFamily': 'Roboto', 'fontWeight': '300' }}>
-        <Form onSubmit={(e) => this.handleSubmit(e)}>
+        <Form onSubmit={(e) => this.handleSubmit(e)} className={classes.search}>
           <FormGroup>
-            <TextField 
-              type="search"
-              label="Search by Symbol" 
-              name="symbol"
-              margin="normal"
-              autoComplete="off"
-              className={classes.textfield}
-              onChange={this.handleInputChange} 
-              value={this.state.search.toUpperCase()} 
-            />
+            <Grid container spacing={8} alignItems="flex-end" justify="center">
+              <Grid item>
+                <i className="material-icons">search</i>
+              </Grid>
+              <Grid item>
+                <TextField 
+                  type="search"
+                  label="Search by Symbol" 
+                  name="symbol"
+                  margin="normal"
+                  autoComplete="off"
+                  className={classes.textfield}
+                  onChange={this.handleInputChange} 
+                  value={this.state.search.toUpperCase()}
+                />
+              </Grid>
+            </Grid>
           </FormGroup>
         </Form>
         <Results 
@@ -136,7 +176,10 @@ class SearchBar extends Component {
           dataLoaded={apiDataLoaded} 
           error={error} 
         />
-        <br />
+        <Summary 
+          desc={summary}
+          logo={logo}  
+        />
         <ResultsCharts 
           data={chartData}
         />

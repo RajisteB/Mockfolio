@@ -10,6 +10,7 @@ const styles = {
   card : {
     width: '90%',
     margin: '0 auto',
+    marginBottom: 8,
     padding: 0
   },
   title: {
@@ -38,7 +39,7 @@ const ResultsCharts = (props) => {
     <div>
     <Card className={classes.card}>
       <CardContent style={{ padding: '0px'}}>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={250}>
         <AreaChart 
           margin={{ right: 20, top: 30 }}
           data={data}
