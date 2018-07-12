@@ -10,8 +10,9 @@ import Results from './results.jsx';
 import ResultsCharts from './resultsCharts.jsx';
 import Grid from '@material-ui/core/Grid';
 import Summary from './summary.jsx';
+import NavBar from '../navigation/navbar.jsx';
 
-const BaseURL = 'http://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exlimit=max&explaintext&exintro&origin=*'
+// const BaseURL = 'http://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exlimit=max&explaintext&exintro&origin=*'
 
 const styles = theme => ({
   container: {
@@ -149,6 +150,7 @@ class SearchBar extends Component {
 
     return (
       <div className="search-bar" style={{ 'fontFamily': 'Roboto', 'fontWeight': '300' }}>
+        <NavBar />
         <Form onSubmit={(e) => this.handleSubmit(e)} className={classes.search}>
           <FormGroup>
             <Grid container spacing={8} alignItems="flex-end" justify="center">
