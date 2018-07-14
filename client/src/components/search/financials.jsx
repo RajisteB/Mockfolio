@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -33,6 +32,12 @@ const styles = {
 
 const Financials = (props) => {
   let { classes, financials } = props;
+
+  financials ?
+  Object.keys(financials).map(datapoint => {
+    financials[`${datapoint}`] === null ? 
+    financials[`${datapoint}`] = 'N/A' : 0
+  }) : '';
 
   return (
     financials ? 

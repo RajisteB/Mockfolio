@@ -12,6 +12,9 @@ import Summary from './summary.jsx';
 import NavBar from '../navigation/navbar.jsx';
 import Comments from '../comments/comments.jsx';
 import Financials from './financials.jsx';
+import Stats from './stats.jsx';
+import Macro from './macro.jsx';
+import ActivateModal from '../trade/activateModal.jsx';
 
 // const BaseURL = 'http://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exlimit=max&explaintext&exintro&origin=*'
 
@@ -45,6 +48,7 @@ class SearchBar extends Component {
       summary: null,
       logo: null,
       chartData: null,
+      stats: null,
       error: false,
       input: false,
       apiDataLoaded: false
@@ -110,13 +114,22 @@ class SearchBar extends Component {
     axios
       .get(`https://api.iextrading.com/1.0/stock/${sym.toLowerCase()}/financials`)
       .then(res => {
-        console.log(res.data);
         this.setState({
           financials: res.data.financials[0],
         });
-        console.log(this.state.financials);
       })
       .catch(err => console.log(err));
+  }
+
+  getKeyStats = (sym) => {
+    axios
+      .get(`https://api.iextrading.com/1.0/stock/${sym.toLowerCase()}/stats`)
+      .then(res => {
+        console.log(res.data);
+        this.setState({
+          stats: res.data,
+        });
+      })
   }
 
   handleInputChange = (e) => {
@@ -133,12 +146,14 @@ class SearchBar extends Component {
     this.getSingleStock(sym);
     this.getChartData(sym);
     this.getFinancials(sym);
+    this.getKeyStats(sym);
   }
 
   componentDidMount() {
     this.getSingleStock('AAPL');
     this.getChartData('AAPL');
     this.getFinancials('AAPL');
+    this.getKeyStats('AAPL');
   }
 
   render() {
@@ -147,6 +162,7 @@ class SearchBar extends Component {
       input, 
       error, 
       summary,
+      stats,
       chartData,
       financials,
       symbolQuote, 
@@ -179,22 +195,18 @@ class SearchBar extends Component {
             </Grid>
           </FormGroup>
         </Form>
+        <ActivateModal />
         <Results 
           symbolQuote={symbolQuote} 
           input={input} 
           dataLoaded={apiDataLoaded} 
           error={error} 
         />
-        <Summary 
-          desc={summary}
-          logo={logo}  
-        />
-        <Financials 
-          financials={financials}
-        />
-        <ResultsCharts 
-          data={chartData}
-        />
+        <ResultsCharts data={chartData} />
+        <Summary desc={summary} logo={logo} />
+        <Financials financials={financials} />
+        <Macro stats={stats} />
+        <Stats stats={stats}/>
         <br/>
         <Comments />
       </div>
