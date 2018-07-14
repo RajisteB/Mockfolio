@@ -41,7 +41,7 @@ const NavBar = (props) => {
   )  
 }
 
-NavBar.PropTypes = {
+NavBar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 

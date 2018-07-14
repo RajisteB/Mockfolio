@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import { Table, FormGroup, Form, Label, Input, classNamesShape } from 'reactstrap';
@@ -11,6 +10,7 @@ import ResultsCharts from './resultsCharts.jsx';
 import Grid from '@material-ui/core/Grid';
 import Summary from './summary.jsx';
 import NavBar from '../navigation/navbar.jsx';
+import Comments from '../comments/comments.jsx';
 
 // const BaseURL = 'http://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exlimit=max&explaintext&exintro&origin=*'
 
@@ -185,6 +185,8 @@ class SearchBar extends Component {
         <ResultsCharts 
           data={chartData}
         />
+        <br/>
+        <Comments />
       </div>
     )
   };

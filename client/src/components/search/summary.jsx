@@ -43,7 +43,7 @@ const Summary = (props) => {
         alignItems= "flex-start"
         justfiy="center"
       >
-        <Grid item xs container justify="flex-start">
+        <Grid item xs container justify="center">
           <img src={logo} className={classes.image}/>
         </Grid>
         <Grid item xs={8} >
