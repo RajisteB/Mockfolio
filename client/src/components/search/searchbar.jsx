@@ -11,6 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import Summary from './summary.jsx';
 import NavBar from '../navigation/navbar.jsx';
 import Comments from '../comments/comments.jsx';
+import Financials from './financials.jsx';
 
 // const BaseURL = 'http://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exlimit=max&explaintext&exintro&origin=*'
 
@@ -40,6 +41,7 @@ class SearchBar extends Component {
       search: '',
       symbolQuote: {},
       symbolNews: [],
+      financials: null,
       summary: null,
       logo: null,
       chartData: null,
@@ -50,7 +52,7 @@ class SearchBar extends Component {
     }
   }
 
-  getCompanySum = (sym) => {
+  getCompanySummmary = (sym) => {
     let desc,
         logo = null;
     axios
@@ -64,7 +66,6 @@ class SearchBar extends Component {
           summary: desc,
           logo: logo
         });
-        console.log(logo);
       })
       .catch(err => console.log(err));
     })
@@ -75,17 +76,15 @@ class SearchBar extends Component {
     axios
       .get(`https://api.iextrading.com/1.0/stock/${sym}/batch?types=quote,news&displayPercent=true`)
       .then(res => {
-        console.log(res.status);
         this.setState({
           symbolQuote: res.data.quote,
           symbolNews: res.data.news,
           search: '',
           input: true,
-          error: false
+          error: false,
+          apiDataLoaded: true
         })
-        this.getCompanySum(this.state.symbolQuote.symbol);
-        console.log(this.state.symbolQuote);
-        console.log(this.state.symbolNews);
+        this.getCompanySummmary(this.state.symbolQuote.symbol);
       })
       .catch(err => {
         console.log(err);
@@ -101,37 +100,45 @@ class SearchBar extends Component {
     axios
       .get(`https://api.iextrading.com/1.0/stock/${sym.toLowerCase()}/chart/1y`)
       .then(res => {
+        this.setState({
+          chartData: res.data,
+        });
+      })
+  }
+
+  getFinancials = (sym) => {
+    axios
+      .get(`https://api.iextrading.com/1.0/stock/${sym.toLowerCase()}/financials`)
+      .then(res => {
         console.log(res.data);
         this.setState({
-          chartData: res.data
-        })
-        console.log(this.state.chartData);
+          financials: res.data.financials[0],
+        });
+        console.log(this.state.financials);
       })
+      .catch(err => console.log(err));
   }
 
   handleInputChange = (e) => {
     e.preventDefault();
     this.setState({ 
       search: e.target.value,
-    })
-    console.log("searchState: " + this.state.search);
+    });
   }
 
   handleSubmit = (e) => {
     let sym = null;
     e.preventDefault();
-    console.log('running handleSubmit function...');
     sym = this.state.search;
     this.getSingleStock(sym);
     this.getChartData(sym);
+    this.getFinancials(sym);
   }
 
-  async componentDidMount() {
-    await this.getSingleStock('AAPL');
-    await this.getChartData('AAPL');
-    await this.setState({
-      apiDataLoaded: true
-    });
+  componentDidMount() {
+    this.getSingleStock('AAPL');
+    this.getChartData('AAPL');
+    this.getFinancials('AAPL');
   }
 
   render() {
@@ -141,12 +148,12 @@ class SearchBar extends Component {
       error, 
       summary,
       chartData,
+      financials,
       symbolQuote, 
       apiDataLoaded 
     } = this.state;
-    let { classes } = this.props;
 
-    console.log(Theme);
+    let { classes } = this.props;
 
     return (
       <div className="search-bar" style={{ 'fontFamily': 'Roboto', 'fontWeight': '300' }}>
@@ -181,6 +188,9 @@ class SearchBar extends Component {
         <Summary 
           desc={summary}
           logo={logo}  
+        />
+        <Financials 
+          financials={financials}
         />
         <ResultsCharts 
           data={chartData}

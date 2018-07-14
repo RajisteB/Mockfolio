@@ -40,8 +40,6 @@ class Comments extends Component {
     this.state = {
       comments: [],
       input: '',
-      upvotes: 0,
-      downvotes: 0,
       nameInput: '',
     }
   }
@@ -81,7 +79,7 @@ class Comments extends Component {
 
   render() {
     let { classes } = this.props;
-    let { comments, upvotes, downvotes, nameInput } = this.state;
+    let { comments, input, nameInput } = this.state;
     
     return (
       <div className={classes.container}>
@@ -91,9 +89,9 @@ class Comments extends Component {
             margin="normal"
             className={classes.textField}
             onChange={(e) => this.handleName(e)}
-            value={this.state.nameInput}
+            value={nameInput}
             placeholder="Name* (Required)"
-            style= {{ width: "50%", marginLeft: 0, paddingLeft: 4 }}
+            style= {{ width: "60%", marginLeft: 0, paddingLeft: 4 }}
           />
           <br/>
           <TextField 
@@ -102,7 +100,7 @@ class Comments extends Component {
             rows="5"
             className={classes.textField}
             onChange={(e) => this.handleCommentInput(e)}
-            value={this.state.input}
+            value={input}
           />
           <Button 
             className={classes.button}
