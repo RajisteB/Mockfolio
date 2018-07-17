@@ -76,7 +76,7 @@ const Results = (props) => {
             <Grid>
               <Typography style={{ color: `${colors}`}} >Chg: {symbolQuote.change.toFixed(2)}</Typography>
               <Typography style={{ color: `${colors}`}} >Chg%: {symbolQuote.changePercent.toFixed(2)}%</Typography>
-              <Typography className={classes.price}>${symbolQuote.close.toFixed(2)}</Typography>  
+              <Typography className={classes.price}>${symbolQuote.latestPrice.toFixed(2)}</Typography>  
             </Grid>
           </Grid>
         </CardContent>

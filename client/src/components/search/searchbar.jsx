@@ -195,7 +195,7 @@ class SearchBar extends Component {
             </Grid>
           </FormGroup>
         </Form>
-        <ActivateModal />
+        <ActivateModal symbol={symbolQuote}/>
         <Results 
           symbolQuote={symbolQuote} 
           input={input} 

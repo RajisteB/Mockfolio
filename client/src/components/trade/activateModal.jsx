@@ -6,6 +6,15 @@ import { Theme } from '../../themes.jsx';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Card from '@material-ui/core/Card';
+import Paper from '@material-ui/core/Paper';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import TextField from '@material-ui/core/TextField';
+import TradeModal from './tradeModal.jsx';
 
 const styles = {
   button: {
@@ -17,25 +26,13 @@ const styles = {
   tradeContainer: {
     width: '80%',
     margin: '0 auto',
+    heihgt: '50vh',
     padding: 20,
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
-  },
-  modal: {
-    margin: '0 auto',
-    marginTop: 50,
-    width: '90%',
-    height: '100vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-  },
-  card: {
-    width: '100%',
-    height: 80,
   }
-}
+};
 
 class ActivateModal extends Component {
   constructor(props) {
@@ -43,9 +40,11 @@ class ActivateModal extends Component {
     this.state = {
       open: false,
     }
+    console.log(props);
   }
 
   handleOpen = () => {
+    let { symbol } = this.props;
     this.setState({ 
       open: true,
     });
@@ -55,11 +54,13 @@ class ActivateModal extends Component {
     console.log('closing...')
     this.setState({
       open: false,
-    })
+    });
   }
 
   render() {
-    let { classes } = this.props;
+    let { classes, symbol } = this.props;
+    let { open } = this.state;
+
     return (
         <div className={classes.tradeContainer}>
           <Button 
@@ -78,22 +79,17 @@ class ActivateModal extends Component {
           >
             SELL
           </Button>
-          <Modal 
-            open={this.state.open}
-            className={classes.modal}
-          >
-            <Card className={classes.card}>
-              <h4 onClick={this.handleClose}>
-                X
-              </h4>
-              <Typography>
-                This is where Modal Text goes...
-              </Typography>
-            </Card>
-          </Modal>
+          <TradeModal 
+            open={open}
+            symbol={symbol}
+          />
         </div>
     )
   }
 }
+
+ActivateModal.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 export default withStyles(styles)(ActivateModal);

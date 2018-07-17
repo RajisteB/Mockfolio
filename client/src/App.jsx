@@ -43,6 +43,13 @@ class App extends Component {
     this.getChartData(sym);
   }
 
+  testMongo = () => {
+    axios
+      .get('/portfolio')
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  }
+
 
   getSectorData = () => {
     let sectorData = [];
@@ -77,6 +84,10 @@ class App extends Component {
   //       apiDataLoaded: true
   //     });
   // }
+
+  componentDidMount() {
+    this.testMongo();
+  }
 
   render() {
     let { 
