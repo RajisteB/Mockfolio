@@ -47,48 +47,9 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-.search-container {
-  width: 90%;
-  height: 135px;
+.chart-container {
+  width: 95%;
+  height: 185px;
   margin: 0 auto;
-  margin-top: 100px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center; }
-
-.portfolio-value {
-  height: 70%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-end; }
-  .portfolio-value h4 {
-    color: #E2E2E4;
-    font-size: 0.75em;
-    font-weight: 300; }
-  .portfolio-value h1 {
-    color: #8E94F2;
-    font-size: 3.8rem;
-    font-weight: 100; }
-    .portfolio-value h1 span {
-      font-size: 1.2rem;
-      color: #FF5C00; }
-  .portfolio-value p {
-    font-size: 0.70rem;
-    color: #22CF15;
-    font-weight: 300; }
-
-.query-form {
-  margin: 0 auto;
-  width: 100%; }
-  .query-form input {
-    width: 100%;
-    border: 0.5px solid #ccc;
-    padding: 6px 20px 3px 20px;
-    box-sizing: border-box;
-    border-radius: 5px;
-    font-size: 1.3rem; }
-    .query-form input::placeholder {
-      font-weight: 400; }
+  margin-top: 10px;
+  background: #FF5C00; }

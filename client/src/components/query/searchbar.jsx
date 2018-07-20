@@ -18,7 +18,7 @@ class SearchBar extends Component {
           <input 
             className="query-input"
             type="text"
-            placeholder="Search by Ticker"
+            placeholder="Search by Ticker..."
           >
           </input>
         </form>

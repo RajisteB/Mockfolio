@@ -1,0 +1,70 @@
+@import '../../defaults.scss';
+
+.trade-container {
+  width: 95%;
+  margin: 0 auto;
+  margin-top: 10px;
+  @include flex(column, flex-start, center);
+  .logo-container {
+    width: 50px;
+    height: 40px;
+    margin-bottom: 10px;
+    background: blue;
+  }
+  .symbol {
+    color: $ACCNT_PURPLE;
+    font-size: 3.5em;
+    font-weight: 100;
+  }
+  .company-name {
+    color: $ACCNT_GRAY;
+    font-size: 0.75em;
+    font-weight: 300;
+  }
+  .price-container {
+    width: 100%;
+    margin: 8px;
+    padding: 10px;
+    @include flex(row, center, center);
+    border-left: 2px solid $MAIN_ORANGE;
+    border-right: 2px solid $MAIN_ORANGE;
+  }
+}
+#price {
+  color: $ACCNT_PURPLE;
+  font-size: 3.3rem;
+  font-weight: 100;
+}
+
+#change {
+  color: $ACCNT_PURPLE;
+  font-size: 1rem;
+  font-weight: 300;
+  text-align: center;
+  span {
+    font-size: 0.5em;
+  }
+}
+
+.trade-action-container {
+  width: 95%;
+  margin: 0 auto;
+  margin-top: 50px;
+  @include flex(row, space-around, center);
+  a {
+    width: 150px;
+    color: $ACCNT_GRAY_LITE;
+    height: 105px;
+    font-size: 2.25rem;
+    font-weight: 500;
+    border-radius: 4px;
+    text-decoration: none;
+    @include flex(row, center, center);
+  }
+  #buy {
+    background-color: $MAIN_PURPLE;
+  }
+  #sell {
+    background: $MAIN_ORANGE;
+  }
+}

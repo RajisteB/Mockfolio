@@ -2,7 +2,7 @@
 
 .search-container {
   width: 90%;
-  height: 150px;
+  height: 135px;
   margin: 0 auto;
   margin-top: 100px;
   @include flex(column, space-between, center);
@@ -11,7 +11,6 @@
 .portfolio-value {
   height: 70%;
   margin: 0 auto;
-  padding-right: 4px;
   @include flex(column, space-between, flex-end);
   h4 {
     color: $ACCNT_GRAY_MID;
@@ -43,7 +42,7 @@
     padding: 6px 20px 3px 20px;
     box-sizing: border-box;
     border-radius: 5px;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     &::placeholder {
       font-weight: 400;
     }
