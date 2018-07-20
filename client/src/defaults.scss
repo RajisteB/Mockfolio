@@ -1,0 +1,104 @@
+// CSS RESET
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+html, body {
+  box-sizing: border-box;
+  width: 100vw;
+  font-family: 'Roboto', sans-serif;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+// SASS VARIABLES
+
+
+//--------------
+// Colors
+//--------------
+$MAIN_PURPLE: #4D3ED4;
+$MAIN_PURPLE_DARK: #1D0EBC;
+$MAIN_ORANGE: #FF5C00;
+$TEXT_BLACK: #2F2F37;
+$TEXT_WHITE: #F9F9F9;
+$MKT_GREEN_DARK: #22CF15;
+$MKT_GREEN_LITE: #51F544;
+$ACCNT_GRAY: #B4B5C9;
+$ACCNT_GRAY_LITE: #F1F1F6;
+$ACCNT_GRAY_MID: #E2E2E4;
+$ACCNT_PURPLE: #8E94F2;
+$ACCNT_ORANGE_LITE: #FFBB00;
+
+//--------------
+// Gradients
+//--------------
+
+@mixin bg-gradient-mix() {
+  background: linear-gradient(to right, $ACCNT_PURPLE, #E6A8ED, #F2CD8E, #FF9B58);
+  background: -webkit-linear-gradient(to right, $ACCNT_PURPLE, #E6A8ED, #F2CD8E, #FF9B58);
+  background: -moz-linear-gradient(to right, $ACCNT_PURPLE, #E6A8ED, #F2CD8E, #FF9B58);
+  background: -ms-linear-gradient(to right, $ACCNT_PURPLE, #E6A8ED, #F2CD8E, #FF9B58);
+}
+
+@mixin bg-gradient-blue() {
+  background: -webkit-linear-gradient(to right, #CBCEF6, #9597E1, #5B62F8, #3ED4BB);
+  background: -moz-linear-gradient(to right, #CBCEF6, #9597E1, #5B62F8, #3ED4BB);
+  background: -ms-linear-gradient(to right, #CBCEF6, #9597E1, #5B62F8, #3ED4BB);
+}
+
+@mixin bg-gradient-red() {
+  background: -webkit-linear-gradient(to right, #8E94F2, #FF8C4B, #F8600A, #C5010D);
+  background: -moz-linear-gradient(to right, #8E94F2, #FF8C4B, #F8600A, #C5010D);
+  background: -ms-linear-gradient(to right, #8E94F2, #FF8C4B, #F8600A, #C5010D);
+}
+
+//--------------
+// Flex-Box Mixins
+//--------------
+@mixin flex($direction, $justify, $align) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}

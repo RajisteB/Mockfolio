@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
+import NavBar from './components/navigation/navbar.jsx';
+import SearchBar from './components/query/searchbar.jsx';
 import axios from 'axios';
 
 
@@ -13,8 +15,10 @@ class App extends Component {
 
   render() {
     return (
-      <div className="new">
-        Redo portfolio...
+      <div>
+        <NavBar />
+        <br />
+        <SearchBar />
       </div>
     )
   }

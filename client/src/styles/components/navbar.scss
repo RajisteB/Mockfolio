@@ -1,0 +1,39 @@
+@import '../../defaults.scss';
+
+.nav-bar {
+  font-family: 'Roboto', sans-serif;
+  height: 90px;
+  width: 100%;
+  position: fixed;
+  .main-color-border {
+    height: 5px;
+    width: 100%;
+    @include bg-gradient-mix();
+  }
+  .nav-content {
+    @include flex(row, flex-start, center);
+    width: 100%;
+    margin-top: 15px;
+  }
+  .logo {
+    font-style: italic;
+    font-weight: 100;
+    font-size: 1.4em;
+    @include flex(row, center, flex-end);
+    width: 40%;
+    .logo-image {
+      padding-right: 5px;
+    }
+  }
+  #menu-icon {
+    margin-right: 19%;
+    margin-left: 3%;
+  }
+  #market-hours {
+    text-align: center;
+    margin-top: 12px;
+    font-size: .5em;
+    font-weight: 100;
+    color: $MAIN_PURPLE;
+  }
+}

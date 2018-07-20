@@ -1,0 +1,51 @@
+@import '../../defaults.scss';
+
+.search-container {
+  width: 90%;
+  height: 150px;
+  margin: 0 auto;
+  margin-top: 100px;
+  @include flex(column, space-between, center);
+}
+
+.portfolio-value {
+  height: 70%;
+  margin: 0 auto;
+  padding-right: 4px;
+  @include flex(column, space-between, flex-end);
+  h4 {
+    color: $ACCNT_GRAY_MID;
+    font-size: 0.75em;
+    font-weight: 300;
+  }
+  h1 {
+    color: $ACCNT_PURPLE;
+    font-size: 3.8rem;
+    font-weight: 100;
+    span {
+      font-size: 1.2rem;
+      color: $MAIN_ORANGE;
+    }
+  }
+  p {
+    font-size: 0.70rem;
+    color: $MKT_GREEN_DARK;
+    font-weight: 300;
+  }
+}
+
+.query-form {
+  margin: 0 auto;
+  width: 100%;
+  input {
+    width: 100%;
+    border: 0.5px solid #ccc;
+    padding: 6px 20px 3px 20px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    &::placeholder {
+      font-weight: 400;
+    }
+  }
+}
