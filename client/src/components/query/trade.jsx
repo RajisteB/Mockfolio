@@ -10,19 +10,26 @@ class Trade extends Component {
   }
   render() {
     let { price, quote, logo } = this.props;
-    let chg = quote.changePercent > 0 ? '+' : quote.changePercent < 0 ? '-' : '';
+    let stockPrice = parseFloat(price).toLocaleString();
+    let chgPct = parseFloat(quote.changePercent).toFixed(2);
+
+    let chg = chgPct > 0 ? '+' : '';
 
     return (
       <div className="trade-container">
-        <div className="logo-container">
-          <img src={logo} alt="" />
+        <div className="ticker">
+          {/* <div className="logo-container">
+            <img src={logo} alt="" />
+          </div> */}
+          <div className="symbol">{quote.symbol}</div>
+          <div className="company-name">{quote.companyName}</div>
         </div>
-        <div className="symbol">{quote.symbol}</div>
-        <div className="company-name">{quote.companyName}</div>
-        <div className="price-container">
-          <div>
-            <div id="price">${price}</div>
-            <div id="change">{chg}{quote.change} <span>({chg}{quote.changePercent}%)</span></div>
+        <div className="trading">
+          <div className="price-container">
+            <div>
+              <div id="price">${stockPrice}</div>
+              <div id="change">{chg}{quote.change} <span>({chg}{chgPct}%)</span></div>
+            </div>
           </div>
         </div>
         <div className="trade-action-container">

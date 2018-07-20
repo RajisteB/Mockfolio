@@ -1,49 +1,63 @@
 @import '../../defaults.scss';
 
 .trade-container {
-  width: 95%;
-  margin: 0 auto;
+  width: 100%;
   margin-top: 24px;
-  @include flex(column, flex-start, center);
-  .logo-container {
-    width: 50px;
-    height: 40px;
-    margin-bottom: 10px;
-  }
-  img {
-    max-height: 100%;
-    max-width: 100%;
-  }
-  .symbol {
-    color: $ACCNT_PURPLE;
-    font-size: 3.5em;
-    font-weight: 300;
-  }
-  .company-name {
-    color: $ACCNT_GRAY;
-    font-size: 0.75em;
-    font-weight: 300;
-  }
-  .price-container {
-    width: 100%;
-    margin: 8px;
-    padding: 10px;
-    @include flex(row, center, center);
-    border-left: 2px solid $MAIN_ORANGE;
-    border-right: 2px solid $MAIN_ORANGE;
-  }
+  @include flex(column, space-between, center);
+  height: 62vh;
+  left: 50%;
+  z-index: 2;
+  position: absolute;
+  transform: translateX(-50%);
+}
+.trading, .ticker {
+  width: 90%;
+}
+.trading {
+  margin-top: 40%;
+}
+.price-container {
+  width: 100%;
+  @include flex(row, flex-end, center);
+}
+.logo-container {
+  width: 30px;
+  height: 20px;
+  margin-bottom: 10px;
+  margin: 0 auto;
+}
+img {
+  max-height: 100%;
+  max-width: 100%;
+}
+.symbol, .company-name {
+  text-align: right;
+}
+.symbol {
+  color: $ACCNT_PURPLE;
+  font-size: 2.5em;
+  font-weight: 300;
+}
+.company-name {
+  color: $ACCNT_GRAY;
+  font-size: 0.75em;
+  font-weight: 300;
 }
 #price {
+  // color: $ACCNT_PURPLE;
   color: $ACCNT_PURPLE;
+  // color: rgba($color: #fff, $alpha: 0.85);
   font-size: 3.3rem;
-  font-weight: 100;
+  font-weight: 300;
 }
 
 #change {
   color: $ACCNT_PURPLE;
-  font-size: 1rem;
-  font-weight: 300;
-  text-align: center;
+  // color: rgba($color: #fff, $alpha: 0.85);
+  font-size: 1.1rem;
+  font-weight: 400;
+  font-style: italic;
+  text-align: right;
   padding-top: 8px;
   span {
     font-size: 0.5em;
@@ -51,26 +65,29 @@
 }
 
 .trade-action-container {
-  width: 95%;
+  width: 100%;
   margin: 0 auto;
-  margin-top: 30px;
+  // margin-top: 30px;
+  padding: 10px;
   @include flex(row, space-around, center);
+  background: linear-gradient(to bottom, rgba(230, 168, 237, 0.4) 50%, #fff);
   a {
-    width: 122px;
-    color: $ACCNT_GRAY_LITE;
-    height: 41px;
-    font-size: 1.3rem;
+    width: 110px;
+    color: #FFF;
+    height: 35px;
+    font-size: 1.2rem;
     font-weight: 500;
-    border-radius: 16px;
+    margin-bottom: 2px;
+    border-radius: 6px;
     text-decoration: none;
     @include flex(row, center, center);
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
       0 1px 2px rgba(0,0,0,0.24);
   }
   #buy {
-    background-color: $MAIN_PURPLE;
+    background-color: $ACCNT_PURPLE;
   }
   #sell {
-    background: $MAIN_ORANGE;
+    background: lighten($MAIN_ORANGE, 10%);
   }
 }

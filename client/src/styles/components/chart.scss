@@ -1,9 +1,10 @@
 @import '../../defaults.scss';
 
 .chart-container {
-  width: 95%;
-  height: 185px;
+  width: 100%;
+  height: 49.7vh;
   margin: 0 auto;
-  margin-top: 10px;
-  background: $MAIN_ORANGE;
+  overflow: hidden;
+  margin-top: 50px;
+  // background: green;
 }

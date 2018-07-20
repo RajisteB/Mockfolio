@@ -57,10 +57,10 @@ table {
   .nav-bar .main-color-border {
     height: 5px;
     width: 100%;
-    background: linear-gradient(to right, #8E94F2, #E6A8ED, #F2CD8E, #FF9B58);
-    background: -webkit-linear-gradient(to right, #8E94F2, #E6A8ED, #F2CD8E, #FF9B58);
-    background: -moz-linear-gradient(to right, #8E94F2, #E6A8ED, #F2CD8E, #FF9B58);
-    background: -ms-linear-gradient(to right, #8E94F2, #E6A8ED, #F2CD8E, #FF9B58); }
+    background: linear-gradient(to right, #4953ea, #E6A8ED, #F2CD8E, #FF9B58);
+    background: -webkit-linear-gradient(to right, #4953ea, #E6A8ED, #F2CD8E, #FF9B58);
+    background: -moz-linear-gradient(to right, #4953ea, #E6A8ED, #F2CD8E, #FF9B58);
+    background: -ms-linear-gradient(to right, #4953ea, #E6A8ED, #F2CD8E, #FF9B58); }
   .nav-bar .nav-content {
     display: flex;
     flex-direction: row;

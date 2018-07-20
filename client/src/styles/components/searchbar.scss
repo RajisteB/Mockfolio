@@ -19,17 +19,19 @@
   }
   h1 {
     color: $ACCNT_PURPLE;
-    font-size: 3.8rem;
-    font-weight: 100;
+    font-size: 3.2rem;
+    font-weight: 300;
+    letter-spacing: 3px;
     span {
       font-size: 1.2rem;
       color: $MAIN_ORANGE;
+      font-weight: 400;
     }
   }
   p {
     font-size: 0.70rem;
     color: $MKT_GREEN_DARK;
-    font-weight: 300;
+    font-weight: 500;
   }
 }
 
@@ -43,8 +45,5 @@
     box-sizing: border-box;
     border-radius: 5px;
     font-size: 1.3rem;
-    &::placeholder {
-      font-weight: 400;
-    }
   }
 }

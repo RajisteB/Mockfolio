@@ -24,7 +24,8 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
-	line-height: 1;
+  line-height: 1;
+  // background: #1c1d30;
 }
 html, body {
   box-sizing: border-box;
@@ -67,7 +68,7 @@ $MKT_GREEN_LITE: #51F544;
 $ACCNT_GRAY: #B4B5C9;
 $ACCNT_GRAY_LITE: #F1F1F6;
 $ACCNT_GRAY_MID: #E2E2E4;
-$ACCNT_PURPLE: #8E94F2;
+$ACCNT_PURPLE: darken(#8E94F2, 15%);
 $ACCNT_ORANGE_LITE: #FFBB00;
 
 //--------------

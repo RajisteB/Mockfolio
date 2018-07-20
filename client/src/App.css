@@ -118,16 +118,18 @@ table {
     font-size: 0.75em;
     font-weight: 300; }
   .portfolio-value h1 {
-    color: #8E94F2;
-    font-size: 3.8rem;
-    font-weight: 100; }
+    color: #4953ea;
+    font-size: 3.2rem;
+    font-weight: 300;
+    letter-spacing: 3px; }
     .portfolio-value h1 span {
       font-size: 1.2rem;
-      color: #FF5C00; }
+      color: #FF5C00;
+      font-weight: 400; }
   .portfolio-value p {
     font-size: 0.70rem;
     color: #22CF15;
-    font-weight: 300; }
+    font-weight: 500; }
 
 .query-form {
   margin: 0 auto;
@@ -139,8 +141,6 @@ table {
     box-sizing: border-box;
     border-radius: 5px;
     font-size: 1.3rem; }
-    .query-form input::placeholder {
-      font-weight: 400; }
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -201,10 +201,10 @@ table {
   .nav-bar .main-color-border {
     height: 5px;
     width: 100%;
-    background: linear-gradient(to right, #8E94F2, #E6A8ED, #F2CD8E, #FF9B58);
-    background: -webkit-linear-gradient(to right, #8E94F2, #E6A8ED, #F2CD8E, #FF9B58);
-    background: -moz-linear-gradient(to right, #8E94F2, #E6A8ED, #F2CD8E, #FF9B58);
-    background: -ms-linear-gradient(to right, #8E94F2, #E6A8ED, #F2CD8E, #FF9B58); }
+    background: linear-gradient(to right, #4953ea, #E6A8ED, #F2CD8E, #FF9B58);
+    background: -webkit-linear-gradient(to right, #4953ea, #E6A8ED, #F2CD8E, #FF9B58);
+    background: -moz-linear-gradient(to right, #4953ea, #E6A8ED, #F2CD8E, #FF9B58);
+    background: -ms-linear-gradient(to right, #4953ea, #E6A8ED, #F2CD8E, #FF9B58); }
   .nav-bar .nav-content {
     display: flex;
     flex-direction: row;

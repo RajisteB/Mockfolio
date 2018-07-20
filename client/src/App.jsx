@@ -18,6 +18,8 @@ class App extends Component {
       query: '',
       input: '',
       logo: '',
+      chartData: '',
+      dataLoaded: false,
     }
   }
 
@@ -31,15 +33,38 @@ class App extends Component {
         logo: marketData.logo.url,
       })
     })
+    .catch(err => console.log(err));
   }
 
-  handleQuery = async (e) => {
-    await e.preventDefault();
-    await this.getStockData(this.state.input);
-    await this.setState({
+  getChartData = (symbol) => {
+    axios.get(`/search/chart/${symbol}`)
+    .then(res => {
+      let chartData = res.data;
+      this.setState({
+        chartData,
+        dataLoaded: true
+      })
+      console.log(chartData);
+    })
+    .catch(err => console.log(err));
+  }
+
+  getTopStocks = () => {
+    axios.get('/search/tops')
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => console.log(err));
+  }
+
+  handleQuery = (e) => {
+    e.preventDefault();
+    this.getStockData(this.state.input);
+    this.getChartData(this.state.input);
+    this.setState({
       input: '',
     })
-    await console.log(this.state.input)
+    console.log(this.state.input)
   }
 
   handleChange = (e) => {
@@ -51,8 +76,8 @@ class App extends Component {
 
 
   componentDidMount() {
+    this.getChartData(this.state.symbol);
     this.getStockData(this.state.symbol);
-    
   }
 
   render() {
@@ -61,6 +86,8 @@ class App extends Component {
       quote, 
       input,
       logo, 
+      chartData,
+      dataLoaded,
     } = this.state;
 
     return (
@@ -90,7 +117,7 @@ class App extends Component {
           quote={quote}
           logo={logo}
         />
-        <Chart />
+        <Chart data={chartData} />
       </div>
     )
   }
