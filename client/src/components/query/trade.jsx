@@ -2,17 +2,27 @@ import React, { Component } from 'react';
 import '../../styles/components/trades.css';
 
 class Trade extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
 
+    }
+  }
   render() {
+    let { price, quote, logo } = this.props;
+    let chg = quote.changePercent > 0 ? '+' : quote.changePercent < 0 ? '-' : '';
+
     return (
       <div className="trade-container">
-        <div className="logo-container"></div>
-        <div className="symbol">AAPL</div>
-        <div className="company-name">Apple Inc.</div>
+        <div className="logo-container">
+          <img src={logo} alt="" />
+        </div>
+        <div className="symbol">{quote.symbol}</div>
+        <div className="company-name">{quote.companyName}</div>
         <div className="price-container">
           <div>
-            <div id="price">$134.93</div>
-            <div id="change">+2.45 <span>(+1.8%)</span></div>
+            <div id="price">${price}</div>
+            <div id="change">{chg}{quote.change} <span>({chg}{quote.changePercent}%)</span></div>
           </div>
         </div>
         <div className="trade-action-container">

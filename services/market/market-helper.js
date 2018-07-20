@@ -4,11 +4,15 @@ const base_URL = 'https://api.iextrading.com/1.0/';
 function getMarketData(req, res) {
   axios.all([
     axios.get(base_URL + "stock/" + req.params.id + "/price"),
-    axios.get(base_URL + "stock/" + req.params.id + "/quote"),
-    axios.get(base_URL + "stock/" + req.params.id + "/chart/1d"),
+    axios.get(base_URL + "stock/" + req.params.id + "/quote?displayPercent=true"),
+    axios.get(base_URL + "stock/" + req.params.id + "/logo"),
   ])
-  .then(axios.spread((priceRes, quoteRes) => {
-    res.send({ price: priceRes.data, quote: quoteRes.data })
+  .then(axios.spread((priceRes, quoteRes, logoRes) => {
+    res.send({ 
+      price: priceRes.data, 
+      quote: quoteRes.data, 
+      logo: logoRes.data, 
+    })
   }))
   .catch(err => console.log(err));
 }
@@ -39,22 +43,20 @@ function getCompanyData(req, res) {
   axios.all([
     axios.get(base_URL + "stock/" + req.params.id + "/financials"),
     axios.get(base_URL + "stock/" + req.params.id + "/company"),
-    axios.get(base_URL + "stock/" + req.params.id + "/logo"),
   ])
-  .then(axios.spread((financialsRes, companyRes, logoRes ) => {
+  .then(axios.spread((financialsRes, companyRes ) => {
     res.send({
       financials: financialsRes.data,
       company: companyRes.data,
-      logo: logoRes.data,
     })
   }))
 }
 
 function getTops(req, res) {
   axios.all([
-    axios.get(base_URL + "stock/market/list/mostactive"),
-    axios.get(base_URL + "stock/market/list/gainers"),
-    axios.get(base_URL + "stock/market/list/losers"),
+    axios.get(base_URL + "stock/market/list/mostactive?displayPercent=true"),
+    axios.get(base_URL + "stock/market/list/gainers?displayPercent=true"),
+    axios.get(base_URL + "stock/market/list/losers?displayPercent=true"),
   ])
   .then(axios.spread((activeRes, gainerRes, loserRes) => {
     res.send({
