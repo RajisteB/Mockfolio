@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Trades = require('../models/Trades');
+const Trades = require('../../models/Trades');
 
 
 router.get('/', (req, res) => {
