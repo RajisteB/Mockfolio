@@ -22,7 +22,8 @@ footer, header, hgroup, menu, nav, section {
   display: block; }
 
 body {
-  line-height: 1; }
+  line-height: 1;
+  background: #1c1d30; }
 
 html, body {
   box-sizing: border-box;
@@ -71,7 +72,8 @@ footer, header, hgroup, menu, nav, section {
   display: block; }
 
 body {
-  line-height: 1; }
+  line-height: 1;
+  background: #1c1d30; }
 
 html, body {
   box-sizing: border-box;
@@ -114,11 +116,11 @@ table {
   justify-content: space-between;
   align-items: flex-end; }
   .portfolio-value h4 {
-    color: #E2E2E4;
+    color: #F1F1F6;
     font-size: 0.75em;
     font-weight: 300; }
   .portfolio-value h1 {
-    color: #4953ea;
+    color: #8e94f2;
     font-size: 3.2rem;
     font-weight: 300;
     letter-spacing: 3px; }
@@ -136,8 +138,10 @@ table {
   width: 100%; }
   .query-form input {
     width: 100%;
-    border: 0.5px solid #ccc;
+    border: 0.5px solid #8e94f2;
     padding: 6px 20px 3px 20px;
+    background: none;
+    color: #F1F1F6;
     box-sizing: border-box;
     border-radius: 5px;
     font-size: 1.3rem; }
@@ -166,7 +170,8 @@ footer, header, hgroup, menu, nav, section {
   display: block; }
 
 body {
-  line-height: 1; }
+  line-height: 1;
+  background: #1c1d30; }
 
 html, body {
   box-sizing: border-box;
@@ -194,17 +199,17 @@ table {
 .nav-bar {
   height: 90px;
   width: 100%;
-  background: #fff;
+  background: #1c1d30;
   font-family: 'Roboto', sans-serif;
   position: fixed;
   top: 0; }
   .nav-bar .main-color-border {
     height: 5px;
     width: 100%;
-    background: linear-gradient(to right, #4953ea, #E6A8ED, #F2CD8E, #FF9B58);
-    background: -webkit-linear-gradient(to right, #4953ea, #E6A8ED, #F2CD8E, #FF9B58);
-    background: -moz-linear-gradient(to right, #4953ea, #E6A8ED, #F2CD8E, #FF9B58);
-    background: -ms-linear-gradient(to right, #4953ea, #E6A8ED, #F2CD8E, #FF9B58); }
+    background: linear-gradient(to right, #8e94f2, #E6A8ED, #F2CD8E, #FF9B58);
+    background: -webkit-linear-gradient(to right, #8e94f2, #E6A8ED, #F2CD8E, #FF9B58);
+    background: -moz-linear-gradient(to right, #8e94f2, #E6A8ED, #F2CD8E, #FF9B58);
+    background: -ms-linear-gradient(to right, #8e94f2, #E6A8ED, #F2CD8E, #FF9B58); }
   .nav-bar .nav-content {
     display: flex;
     flex-direction: row;
@@ -213,9 +218,9 @@ table {
     width: 100%;
     margin-top: 15px; }
   .nav-bar .logo {
-    font-style: italic;
-    font-weight: 100;
+    font-weight: 300;
     font-size: 1.4em;
+    color: #e9ebfd;
     display: flex;
     flex-direction: row;
     justify-content: center;

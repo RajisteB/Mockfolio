@@ -18,10 +18,12 @@ class Trade extends Component {
     return (
       <div className="trade-container">
         <div className="ticker">
-          {/* <div className="logo-container">
-            <img src={logo} alt="" />
-          </div> */}
-          <div className="symbol">{quote.symbol}</div>
+          <div className="symbol">
+            {/* <div className="logo-container">
+              <img src={logo} alt="" />
+            </div> */}
+            {quote.symbol}
+          </div>
           <div className="company-name">{quote.companyName}</div>
         </div>
         <div className="trading">

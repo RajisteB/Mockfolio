@@ -13,7 +13,7 @@
   margin: 0 auto;
   @include flex(column, space-between, flex-end);
   h4 {
-    color: $ACCNT_GRAY_MID;
+    color: $ACCNT_GRAY_LITE;
     font-size: 0.75em;
     font-weight: 300;
   }
@@ -40,8 +40,10 @@
   width: 100%;
   input {
     width: 100%;
-    border: 0.5px solid #ccc;
+    border: 0.5px solid $ACCNT_PURPLE;
     padding: 6px 20px 3px 20px;
+    background: none;
+    color: $ACCNT_GRAY_LITE;
     box-sizing: border-box;
     border-radius: 5px;
     font-size: 1.3rem;

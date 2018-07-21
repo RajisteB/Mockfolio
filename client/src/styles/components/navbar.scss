@@ -3,7 +3,7 @@
 .nav-bar {
   height: 90px;
   width: 100%;
-  background: #fff;
+  background: #1c1d30;
   font-family: 'Roboto', sans-serif;
 
   position: fixed;
@@ -19,9 +19,9 @@
     margin-top: 15px;
   }
   .logo {
-    font-style: italic;
-    font-weight: 100;
+    font-weight: 300;
     font-size: 1.4em;
+    color: lighten($ACCNT_PURPLE, 20%);
     @include flex(row, center, flex-end);
     width: 40%;
     .logo-image {

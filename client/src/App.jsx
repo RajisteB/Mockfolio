@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import './App.css';
 import './styles/components/searchbar.css';
 import NavBar from './components/navigation/navbar.jsx';
-import SearchBar from './components/query/searchbar.jsx';
 import Chart from './components/query/chart.jsx';
 import Trade from './components/query/trade.jsx';
+import TopList from './components/lists/toplist.jsx';
 import axios from 'axios';
 
 
@@ -19,6 +19,9 @@ class App extends Component {
       input: '',
       logo: '',
       chartData: '',
+      actives: '',
+      gainers: '',
+      losers: '',
       dataLoaded: false,
     }
   }
@@ -43,8 +46,7 @@ class App extends Component {
       this.setState({
         chartData,
         dataLoaded: true
-      })
-      console.log(chartData);
+      });
     })
     .catch(err => console.log(err));
   }
@@ -52,7 +54,11 @@ class App extends Component {
   getTopStocks = () => {
     axios.get('/search/tops')
     .then(res => {
-      console.log(res)
+      this.setState({
+        actives: res.data.topActives,
+        gainers: res.data.topGainers,
+        losers: res.data.topLosers,
+      })
     })
     .catch(err => console.log(err));
   }
@@ -78,6 +84,7 @@ class App extends Component {
   componentDidMount() {
     this.getChartData(this.state.symbol);
     this.getStockData(this.state.symbol);
+    this.getTopStocks();
   }
 
   render() {
@@ -86,10 +93,14 @@ class App extends Component {
       quote, 
       input,
       logo, 
+      actives,
+      gainers,
+      losers,
       chartData,
       dataLoaded,
     } = this.state;
 
+    let ticker = <h2 color="#fff" >Enter Ticker</h2>;
     return (
       <div>
         <NavBar />
@@ -107,7 +118,7 @@ class App extends Component {
             <input 
               className="query-input"
               type="text"
-              placeholder="Search by Ticker..."
+              placeholder="Enter Ticker..."
               value={input.toUpperCase()}
             />
           </form>
@@ -118,6 +129,11 @@ class App extends Component {
           logo={logo}
         />
         <Chart data={chartData} />
+        <TopList 
+          actives={actives}  
+          gainers={gainers}
+          losers={losers}
+        />
       </div>
     )
   }

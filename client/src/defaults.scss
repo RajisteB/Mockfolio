@@ -25,7 +25,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
   line-height: 1;
-  // background: #1c1d30;
+  background: #1c1d30;
 }
 html, body {
   box-sizing: border-box;
@@ -65,10 +65,10 @@ $TEXT_BLACK: #2F2F37;
 $TEXT_WHITE: #F9F9F9;
 $MKT_GREEN_DARK: #22CF15;
 $MKT_GREEN_LITE: #51F544;
-$ACCNT_GRAY: #B4B5C9;
+$ACCNT_GRAY: lighten(#B4B5C9, 20%);
 $ACCNT_GRAY_LITE: #F1F1F6;
 $ACCNT_GRAY_MID: #E2E2E4;
-$ACCNT_PURPLE: darken(#8E94F2, 15%);
+$ACCNT_PURPLE: lighten(#8E94F2, 0%);
 $ACCNT_ORANGE_LITE: #FFBB00;
 
 //--------------

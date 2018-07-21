@@ -22,7 +22,8 @@ footer, header, hgroup, menu, nav, section {
   display: block; }
 
 body {
-  line-height: 1; }
+  line-height: 1;
+  background: #1c1d30; }
 
 html, body {
   box-sizing: border-box;
@@ -74,35 +75,41 @@ table {
   align-items: center; }
 
 .logo-container {
-  width: 30px;
-  height: 20px;
-  margin-bottom: 10px;
-  margin: 0 auto; }
+  width: 60px;
+  height: 60px;
+  padding: 10px; }
 
 img {
   max-height: 100%;
-  max-width: 100%; }
+  max-width: 100%;
+  margin: 0;
+  padding: 0; }
 
 .symbol, .company-name {
   text-align: right; }
 
 .symbol {
-  color: #4953ea;
+  color: #8e94f2;
   font-size: 2.5em;
-  font-weight: 300; }
+  font-weight: 300;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center; }
 
 .company-name {
-  color: #B4B5C9;
+  color: #8e94f2;
   font-size: 0.75em;
-  font-weight: 300; }
+  font-weight: 300;
+  letter-spacing: 3px; }
 
 #price {
-  color: #4953ea;
+  color: #8e94f2;
   font-size: 3.3rem;
   font-weight: 300; }
 
 #change {
-  color: #4953ea;
+  color: #8e94f2;
   font-size: 1.1rem;
   font-weight: 400;
   font-style: italic;
@@ -114,20 +121,19 @@ img {
 .trade-action-container {
   width: 100%;
   margin: 0 auto;
-  padding: 10px;
+  padding: 12px;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  background: linear-gradient(to bottom, rgba(230, 168, 237, 0.4) 50%, #fff); }
+  justify-content: space-between;
+  align-items: center; }
   .trade-action-container a {
-    width: 110px;
-    color: #FFF;
-    height: 35px;
+    width: 45%;
+    height: 70px;
     font-size: 1.2rem;
     font-weight: 500;
     margin-bottom: 2px;
     border-radius: 6px;
+    letter-spacing: 2px;
     text-decoration: none;
     display: flex;
     flex-direction: row;
@@ -135,6 +141,8 @@ img {
     align-items: center;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
   .trade-action-container #buy {
-    background-color: #4953ea; }
+    color: #8e94f2;
+    border: 1px solid #8e94f2; }
   .trade-action-container #sell {
-    background: #ff7d33; }
+    color: #FF5C00;
+    border: 1px solid #ff7d33; }

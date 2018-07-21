@@ -7,7 +7,6 @@ import '../../styles/components/chart.css';
 
 const Chart = (props) => {
   let { data } = props;
-  console.log(data.chart1m);
 
   return (
     <div className="chart-container">
@@ -16,6 +15,13 @@ const Chart = (props) => {
           data={data.chart1y}
           margin={{ left: -60, bottom: 0 }}
         >
+          <defs>
+            <linearGradient id="colorClose" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="6%" stopColor="#FF5C00" stopOpacity={0.8}/>
+              <stop offset="40%" stopColor="#FF5C00" stopOpacity={0.4}/>
+              <stop offset="90%" stopColor="#FF5C00" stopOpacity={0}/>
+            </linearGradient>
+          </defs>
           <XAxis 
             dataKey="date" 
             hide={true}
@@ -31,8 +37,8 @@ const Chart = (props) => {
             type="basis"
             dataKey="close"
             stroke="none"
-            fill="#E6A8ED"
-            fillOpacity={0.4}            
+            fill="url(#colorClose)"
+            fillOpacity={0.6}            
           />
         </AreaChart>
       </ResponsiveContainer>
